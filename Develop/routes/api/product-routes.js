@@ -5,9 +5,30 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // get all products
 router.get('/', (req, res) => {
-  // find all products
+    // find all products
   // be sure to include its associated Category and Tag data
-});
+    try {
+      const productData = await Product.findAll({
+        // JOIN with products     
+        include: [ 
+          {
+            model: Category,
+            attributes: ['category_name', 'category_id']
+          },
+          {
+            model: Product, 
+            attributes: ['product_name', 'id']
+          }
+           ]
+      })
+      res.status(200).json(productData);
+  
+    } catch (err) {
+      //console log error if status = 500
+      res.status(500).json(err);
+    }
+  });
+
 
 // get one product
 router.get('/:id', (req, res) => {
@@ -91,6 +112,22 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  Product.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+    .then(dbE_commerce => {
+      if (!dbE_commerce) {
+        res.status(404).json({ message: 'No user found with this id' });
+        return;
+      }
+      res.json(dbE_commerce)
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 module.exports = router;
