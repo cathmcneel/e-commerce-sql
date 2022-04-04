@@ -64,6 +64,23 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
+  Category.update(req.body, {
+    individualHooks: true,
+    where: {
+      id: req.params.id
+    }
+  })
+    .then(dbE_commerce => {
+      if (!dbE_commerce[0]) {
+        res.status(404).json({ message: 'No category found with this id' });
+        return;
+      }
+        res.json(dbE_commerce)
+    })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
 });
 
 router.delete('/:id', (req, res) => {
