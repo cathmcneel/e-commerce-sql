@@ -20,6 +20,7 @@ const { Category, Product } = require('../../models');
   });
 
 
+
 router.get('/:id', (req, res) => {
   // find one category by its `id` value
   // be sure to include its associated Products
@@ -30,6 +31,7 @@ router.get('/:id', (req, res) => {
     include: [ {model: Product} ]
   
   })
+  //this request returns a promise , the data in this promise is called dbE_commerce, this is just a variable name 
   .then(dbE_commerce => {
     if (!dbE_commerce) {
       res.status(404).json({ message: 'No product found with this id'});
@@ -90,7 +92,7 @@ router.delete('/:id', (req, res) => {
       id: req.params.id
     }
   })
-  then(dbE_commerce => {
+  .then(dbE_commerce => {
     if (!dbE_commerce) {
       res.status(404).json({ message: 'No user found with this id' });
       return;
