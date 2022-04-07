@@ -5,7 +5,5 @@
 ### View, create, update, and delete categories
 ### View, create, update, and delete tags
 
-### View a demo video here
-
-
+### [View a demo video here](develop/Ecommerce-demo.mp4)
 
