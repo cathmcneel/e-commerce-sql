@@ -6,4 +6,3 @@
 ### View, create, update, and delete tags
 
 ### [View a demo video here](Develop/Ecommerce-demo.mp4)
-
